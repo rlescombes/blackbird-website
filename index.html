@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Blackbird High Desert Bistro — opening early 2027 on historic Mesquite Street in Las Cruces, New Mexico.">
+  <title>Blackbird High Desert Bistro | Las Cruces, NM</title>
+  <style>
+    :root{
+      --cream:#f3ecdf;
+      --paper:#fbf7f0;
+      --ink:#171411;
+      --wine:#6c1824;
+      --muted:#746b62;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:var(--cream);
+      color:var(--ink);
+      font-family:Arial,Helvetica,sans-serif;
+    }
+    body.modal-open{overflow:hidden}
+    button,input{font:inherit}
+
+    .hero{
+      min-height:100vh;
+      min-height:100svh;
+      position:relative;
+      background-image:url("blackbird-evening.png");
+      background-position:center center;
+      background-size:cover;
+      background-repeat:no-repeat;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding:clamp(28px,5vw,70px) 24px;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,rgba(8,10,14,.03) 20%,rgba(8,8,8,.12) 55%,rgba(8,8,8,.68) 100%);
+    }
+    .hero-copy{
+      position:relative;
+      z-index:1;
+      color:#fff;
+      text-align:center;
+      text-shadow:0 2px 18px rgba(0,0,0,.62);
+      max-width:900px;
+      padding-bottom:8px;
+    }
+    .kicker,.opening{
+      font-size:.73rem;
+      letter-spacing:.30em;
+      text-transform:uppercase;
+    }
+    .kicker{margin:0 0 18px}
+    .hero h1{
+      font:400 clamp(2.5rem,6.5vw,6rem)/.95 Georgia,"Times New Roman",serif;
+      margin:0 0 18px;
+    }
+    .tagline{
+      font:400 clamp(1.05rem,2.2vw,1.4rem)/1.5 Georgia,"Times New Roman",serif;
+      margin:0 auto 20px;
+    }
+    .opening{font-weight:700;margin:22px 0 0}
+    .down{
+      display:inline-block;
+      margin-top:26px;
+      color:#fff;
+      text-decoration:none;
+      font-size:1.5rem;
+    }
+
+    .intro{
+      padding:clamp(65px,9vw,120px) 24px;
+      text-align:center;
+      background:var(--cream);
+    }
+    .intro-inner{max-width:760px;margin:auto}
+    .wordmark{margin:0 0 38px}
+    .wordmark-main{
+      font-family:"Arial Narrow",Arial,Helvetica,sans-serif;
+      font-stretch:condensed;
+      font-weight:300;
+      font-size:clamp(3rem,8vw,5.4rem);
+      letter-spacing:.13em;
+      line-height:.9;
+      text-transform:lowercase;
+    }
+    .wordmark-sub{
+      margin-top:18px;
+      font-size:.78rem;
+      letter-spacing:.38em;
+      text-transform:uppercase;
+    }
+    .intro h2{
+      font:400 clamp(2rem,4vw,3.5rem)/1.1 Georgia,"Times New Roman",serif;
+      margin:0 0 24px;
+    }
+    .intro p{
+      font:400 1.08rem/1.8 Georgia,"Times New Roman",serif;
+      color:#403a35;
+      margin:0 auto 32px;
+      max-width:680px;
+    }
+    .details{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px 28px;
+      margin:35px 0;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.7rem;
+      color:var(--muted);
+    }
+    .cta{
+      display:inline-block;
+      border:1px solid var(--ink);
+      background:transparent;
+      padding:15px 22px 14px;
+      text-decoration:none;
+      color:var(--ink);
+      text-transform:uppercase;
+      letter-spacing:.20em;
+      font-size:.7rem;
+      transition:.2s;
+      cursor:pointer;
+    }
+    .cta:hover{background:var(--ink);color:var(--cream)}
+    .email{margin-top:26px!important;font:400 .85rem/1.4 Arial,Helvetica,sans-serif!important}
+    .email a{color:var(--wine);text-decoration:none}
+
+    footer{
+      text-align:center;
+      padding:0 20px 34px;
+      text-transform:uppercase;
+      letter-spacing:.15em;
+      font-size:.65rem;
+      color:#81786f;
+      background:var(--cream);
+    }
+
+    /* Signup modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+      background:rgba(17,14,12,.72);
+      backdrop-filter:blur(5px);
+    }
+    .modal.is-open{display:flex}
+    .modal-card{
+      position:relative;
+      width:min(560px,100%);
+      background:var(--paper);
+      padding:clamp(28px,6vw,52px);
+      box-shadow:0 28px 80px rgba(0,0,0,.35);
+      border-top:3px solid var(--wine);
+    }
+    .modal-close{
+      position:absolute;
+      top:14px;
+      right:16px;
+      border:0;
+      background:transparent;
+      font-size:1.8rem;
+      line-height:1;
+      cursor:pointer;
+      color:var(--ink);
+    }
+    .modal-kicker{
+      margin:0 0 14px;
+      color:var(--wine);
+      text-transform:uppercase;
+      letter-spacing:.24em;
+      font-size:.68rem;
+    }
+    .modal h2{
+      margin:0 0 12px;
+      font:400 clamp(2rem,5vw,3rem)/1.05 Georgia,"Times New Roman",serif;
+    }
+    .modal-copy{
+      margin:0 0 28px;
+      color:#514a44;
+      font:400 1rem/1.65 Georgia,"Times New Roman",serif;
+    }
+    .field{margin-bottom:18px;text-align:left}
+    .field label{
+      display:block;
+      margin-bottom:7px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.66rem;
+    }
+    .field input{
+      width:100%;
+      border:1px solid #bcb1a4;
+      background:#fffdf9;
+      padding:13px 14px;
+      color:var(--ink);
+      outline:none;
+    }
+    .field input:focus{border-color:var(--wine);box-shadow:0 0 0 2px rgba(108,24,36,.08)}
+    .consent{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin:18px 0 24px;
+      text-align:left;
+      color:#5b534c;
+      font-size:.78rem;
+      line-height:1.45;
+    }
+    .consent input{margin-top:3px}
+    .submit-btn{
+      width:100%;
+      border:1px solid var(--ink);
+      background:var(--ink);
+      color:var(--paper);
+      padding:15px 18px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.7rem;
+      cursor:pointer;
+    }
+    .submit-btn:hover{background:var(--wine);border-color:var(--wine)}
+    .privacy{
+      margin:16px 0 0!important;
+      font:400 .7rem/1.5 Arial,Helvetica,sans-serif!important;
+      color:#80766d!important;
+    }
+    .honeypot{display:none!important}
+
+    @media(max-width:600px){
+      .hero{background-position:58% center}
+      .details{display:grid;gap:10px}
+      .wordmark-sub{letter-spacing:.22em}
+      .modal-card{padding:34px 22px 28px}
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-label="Blackbird High Desert Bistro">
+      <div class="hero-copy">
+        <p class="kicker">Historic Mesquite Street · Las Cruces, New Mexico</p>
+        <h1>Something new is taking flight.</h1>
+        <p class="tagline">Modern New Mexican cuisine · Wine · Cocktails</p>
+        <p class="opening">Opening Early 2027</p>
+        <a class="down" href="#about" aria-label="Learn more">↓</a>
+      </div>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="intro-inner">
+        <div class="wordmark" aria-label="blackbird High Desert Bistro">
+          <div class="wordmark-main">blackbird</div>
+          <div class="wordmark-sub">High Desert Bistro</div>
+        </div>
+
+        <h2>A new chapter on Mesquite.</h2>
+        <p>
+          Blackbird is a neighborhood bistro created for long lunches, thoughtful wines,
+          crafted cocktails and romantic evenings worth lingering over.
+        </p>
+
+        <div class="details">
+          <span>118 N Mesquite Street</span>
+          <span>Las Cruces, New Mexico</span>
+          <span>Opening Early 2027</span>
+        </div>
+
+        <button class="cta" type="button" id="openSignup">Sign up for updates</button>
+
+        <p class="email">
+          <a href="mailto:hello@blackbirdonmesquite.com">hello@blackbirdonmesquite.com</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Blackbird High Desert Bistro</footer>
+
+  <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+    <div class="modal-card">
+      <button class="modal-close" type="button" id="closeSignup" aria-label="Close">×</button>
+      <p class="modal-kicker">Be the first to know</p>
+      <h2 id="signupTitle">Follow Blackbird's opening.</h2>
+      <p class="modal-copy">
+        Join the list for opening news, first looks, menu previews and reservation announcements.
+      </p>
+
+      <form id="blackbirdSignup" action="https://assets.mailerlite.com/jsonp/2668617/forms/199911113654011893/subscribe" method="POST">
+        <div class="field">
+          <label for="firstName">First name</label>
+          <input id="firstName" name="fields[name]" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="fields[last_name]" type="text" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" name="fields[email]" type="email" autocomplete="email" required>
+        </div>
+        <label class="consent">
+          <input type="checkbox" required>
+          <span>I agree to receive occasional Blackbird High Desert Bistro opening updates by email.</span>
+        </label>
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
+        <button class="submit-btn" type="submit">Join the list</button>
+        <p class="privacy">No spam. Just Blackbird news, opening updates and occasional invitations.</p>
+      </form>
+      <div id="signupSuccess" hidden>
+        <h2>You’re on the list.</h2>
+        <p class="modal-copy">Watch your inbox for a note from Blackbird.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('signupModal');
+    const openBtn = document.getElementById('openSignup');
+    const closeBtn = document.getElementById('closeSignup');
+
+    function openModal(){
+      modal.classList.add('is-open');
+      document.body.classList.add('modal-open');
+      setTimeout(() => document.getElementById('firstName').focus(), 50);
+    }
+    function closeModal(){
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+
+    const signupForm = document.getElementById('blackbirdSignup');
+    const signupSuccess = document.getElementById('signupSuccess');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = signupForm.querySelector('.submit-btn');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining...';
+
+      try {
+        await fetch(signupForm.action, {
+          method: 'POST',
+          body: new FormData(signupForm),
+          mode: 'no-cors'
+        });
+        signupForm.hidden = true;
+        signupSuccess.hidden = false;
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        alert('We could not complete your signup. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
